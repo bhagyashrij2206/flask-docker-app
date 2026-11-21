@@ -40,8 +40,15 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v4
 
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
       - name: Build Docker image
-        run: docker build -t flask-docker-app:ci .
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          load: true
+          tags: flask-docker-app:ci
 
       - name: Smoke test the container
         run: |
@@ -68,8 +75,12 @@ jobs:
 
       - name: Push image
         if: github.event_name == 'push'
-        run: |
-          docker tag flask-docker-app:ci $IMAGE_NAME:latest
-          docker tag flask-docker-app:ci $IMAGE_NAME:${GITHUB_SHA::7}
-          docker push $IMAGE_NAME:latest
-          docker push $IMAGE_NAME:${GITHUB_SHA::7}
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          tags: |
+            ${{ env.IMAGE_NAME }}:latest
+            ${{ env.IMAGE_NAME }}:${{ github.sha }}
+          labels: |
+            org.opencontainers.image.source=https://github.com/${{ github.repository }}

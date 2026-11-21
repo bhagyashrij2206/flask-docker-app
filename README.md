@@ -9,7 +9,7 @@ On every push and pull request to `main`, GitHub Actions:
 1. Runs the unit tests with pytest
 2. Builds the Docker image
 3. Starts the container and checks `/health` (smoke test)
-4. On push to `main`, publishes the image to GitHub Container Registry as `ghcr.io/bhagyashrij2206/flask-docker-app` (tags `latest` and the short commit SHA)
+4. On push to `main`, publishes the image to GitHub Container Registry as `ghcr.io/bhagyashrij2206/flask-docker-app` (tags `latest` and the commit SHA)
 
 See [.github/workflows/ci.yml](.github/workflows/ci.yml).
 
