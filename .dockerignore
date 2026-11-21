@@ -1,3 +1,7 @@
 .venv
 __pycache__
 .git
+.github
+tests
+pytest.ini
+.pytest_cache

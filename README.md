@@ -1,6 +1,17 @@
 # Flask Docker App
 
-A small Python Flask web app packaged as a Docker image.
+[![CI/CD](https://github.com/bhagyashrij2206/flask-docker-app/actions/workflows/ci.yml/badge.svg)](https://github.com/bhagyashrij2206/flask-docker-app/actions/workflows/ci.yml)
+
+A small Python Flask web app packaged as a Docker image, with a GitHub Actions CI/CD pipeline.
+
+## CI/CD pipeline
+On every push and pull request to `main`, GitHub Actions:
+1. Runs the unit tests with pytest
+2. Builds the Docker image
+3. Starts the container and checks `/health` (smoke test)
+4. On push to `main`, publishes the image to GitHub Container Registry as `ghcr.io/bhagyashrij2206/flask-docker-app` (tags `latest` and the short commit SHA)
+
+See [.github/workflows/ci.yml](.github/workflows/ci.yml).
 
 ## Endpoints
 - `/` – home page
@@ -28,5 +39,11 @@ docker stop flask-app
 docker rm flask-app
 ```
 
+## Run the tests
+```powershell
+pip install pytest
+pytest -v
+```
+
 ## Tech
-Python 3.12 · Flask · Gunicorn · Docker
+Python 3.12 · Flask · Gunicorn · Docker · pytest · GitHub Actions · GHCR
